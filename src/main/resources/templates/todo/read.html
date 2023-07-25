@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/lteLayout.html}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- [[${Todo}]] -->
+        TodoDTO(tno=1495, title=title43, writer=글쓴이43, content=내용43, state=false, regDate=2023-07-16 17:34:37, updateDate=null)
+        <h1>조회 페이지</h1>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+              <!-- Box Comment -->
+              <div class="card card-widget">
+                <div class="card-header">
+                  <div class="user-block">
+                    <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="회원 이미지">
+                    <span class="username"><a href="#">[[${Todo.writer}]]</a></span>
+                    <span class="description">[[${Todo.title}]] - [[${Todo.regDate}]]</span>
+                  </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <img class="img-fluid pad" src="../dist/img/photo2.png" alt="게시글 이미지">
+  
+                  <p>게시글 내용 [[${Todo.contents}]]</p>
+
+
+                  <!-- 좋아요 싫어요 아직 구현 못함 -->
+                  <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i> Share</button>
+                  <button type="button" class="btn btn-default btn-sm"><i class="far fa-thumbs-up"></i> Like</button>
+                  <span class="float-right text-muted">127 likes - 3 comments</span> -->
+                </div>
+                <!-- 댓글 폼 -->
+                <div class="card-footer card-comments">
+                  <div class="card-comment">
+                    <!-- User image -->
+                    <img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg" alt="User Image">
+  
+                    <div class="comment-text">
+                      <span class="username">
+                        댓글 쓴사람1
+                        <span class="text-muted float-right">작성 시간 8:03 PM Today</span>
+                      </span><!-- /.username -->
+                        댓글 내용
+                    </div>
+                    <!-- /.comment-text -->
+                  </div>
+                  <!-- /.card-comment -->
+                  <div class="card-comment">
+                    <!-- User image -->
+                    <img class="img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="User Image">
+  
+                    <div class="comment-text">
+                      <span class="username">
+                        댓글 쓴사람2
+                        <span class="text-muted float-right">작성 시간 8:03 PM Today</span>
+                      </span><!-- /.username -->
+                      댓글 내용
+                    </div>
+                    <!-- /.comment-text -->
+                  </div>
+                  <!-- /.card-comment -->
+                </div>
+                <!-- 댓글 쓰기  -->
+                <div class="card-footer">
+                  <form action="#" method="post">
+                    <img class="img-fluid img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="Alt Text">
+                    <!-- .img-push is used to add margin to elements next to floating images -->
+                    <div class="img-push">
+                      <input type="text" class="form-control form-control-sm" placeholder="Press enter to post comment">
+                    </div>
+                  </form>
+                </div>
+                <!-- /.card-footer -->
+              </div>
+              <!-- /.card -->
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+</html>

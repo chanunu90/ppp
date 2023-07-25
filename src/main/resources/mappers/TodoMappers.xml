@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.astro.portfolio.mappers.TodoMappers">
+
+
+    <!-- <select id="time" resultType="String">
+        select now()
+    </select> -->
+
+    <select id="todoSelectAll" resultType="org.astro.portfolio.dto.TodoDTO">
+
+		select tno ,  title , writer , contents ,state ,regDate , updateDate ,  ord ,images
+        from tbl_todo tt left outer join tbl_todo_image ti
+        on tt.tno = ti.image_tno
+        where ti.ord = 0 or ord is null
+        order by tno desc
+        limit #{skip}, #{size}
+
+    </select>
+
+    <select id="todoOne" resultType="org.astro.portfolio.dto.TodoDTO">
+        select * from tbl_todo where tno = #{tno}
+    </select>
+
+    <select id="getListCount" resultType="long">
+        select count(*) 
+        from 
+        (select tno from tbl_todo 
+        where tno > 0 limit #{countEnd}) todo
+    </select>
+
+
+    <insert id="setTodo">
+        INSERT INTO tbl_todo (title, writer, contents)
+        VALUES (#{title}, #{writer}, #{contents})
+        <selectKey keyProperty="tno" resultType="java.lang.Long" order="AFTER">
+            SELECT LAST_INSERT_ID() AS tno
+        </selectKey>
+    </insert>
+
+
+    <insert id="setTodoImage">
+        insert into tbl_todo_image (image_tno, images , ord)
+        values (#{image_tno} , #{image} , #{ord})
+    </insert>
+
+
+</mapper>

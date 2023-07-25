@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div>
+
+
+    <div>
+      <!-- [[${TodoObj.list}]]
+      [[${pageRequestDTO}]] -->
+    </div>
+
+    <div>
+      <h1>검색기능</h1>
+
+      <form action="/portfolio/list" method="get">
+
+          <div class="row">
+            <div class="col-12 col-sm-1">
+              <div>
+                <select class="form-control" style="width: 180px;">
+                  <option name="type" data-select2-id="--">전체</option>
+                  <option data-select2-id="t">제목</option>
+                  <option data-select2-id="c">내용</option>
+                  <option data-select2-id="w">작성자</option>
+                  <option data-select2-id="tc">제목/내용</option>
+                  <option data-select2-id="cw">내용/작성자</option>
+                  <option data-select2-id="tcw">제목/내용/작성자</option>
+                </select>
+              </div>
+              <!-- /.form-group -->
+            </div>
+            <!-- /.col -->
+            <div>
+              <input name="search" style="margin-left:55px;" type="text" class="form-control" placeholder="검색">
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="margin-left:60px; width: 100px; height: 38px;">검색</button>
+
+          </div>
+
+
+      </form>
+
+      <div class="card-body">
+
+        <!-- /.row -->
+      </div>
+    </div>
+
+    <h1>Todo List Page</h1>
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Bordered Table</h3>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <table class="table table-bordered todoTable">
+          <thead>
+          <tr style="background: #ddd; text-align: center;">
+            <th style="width: 15%">게시번호</th>
+            <th style="width: 20%">이미지</th>
+            <th style="width: 55%">제목</th>
+            <th style="width: 40px">작성자</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="todo :${TodoObj.list}">
+            <td th:data-tno="${todo.tno}">[[${todo.tno}]]</td><!-- /.card-header -->
+            <td th:data-tno="${todo.tno}"><img th:src="|http://localhost/s_${todo.picture}|" style="width: 200px;" alt="이미지 자리"></td>
+            <td th:data-tno="${todo.tno}">[[${todo.title}]] - (댓글수)</td>
+            <td><span class="">[[${todo.writer}]]</span></td>
+            <!-- badge 작은 글씨 bg-danger 빨간배경 -->
+          </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer clearfix">
+        <div style="cursor: pointer; float: left;"><a href="/portfolio/register">글쓰기</a></div>
+        <ul class="pagination pagination-sm m-0 float-right todoUL">
+          <li class="page-item"><a class="page-link" href="10">&laquo;</a></li>
+          <li class="page-item"><a class="page-link" href="11">11</a></li>
+          <li class="page-item"><a class="page-link" href="12">12</a></li>
+          <li class="page-item"><a class="page-link" href="13">13</a></li>
+          <li class="page-item"><a class="page-link" href="21">&raquo;</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- /.card -->
+
+    <form class="actionForm" action="/portfolio/list" method="get">
+      <input type="hidden" name="page" th:value="${pageRequestDTO.page}">
+      <!-- <input type="hidden" name="size" th:value="${TodoObj.size}"> -->
+    </form>
+
+    <!-- <script src="/js/pageUtil.js"></script> -->
+  </div>
+
+  <script layout:fragment="script" th:inline="javascript">
+
+    // console.log([[TodoObj]])
+
+    const actionForm = document.querySelector(".actionForm")
+    const pageObj = actionForm.querySelector("input[name='page']")
+    const todoUL = document.querySelector(".todoUL")
+
+    todoUL.addEventListener("click", (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const target = e.target
+      const pageNum = target.getAttribute("href")
+
+      pageObj.value = pageNum
+      actionForm.setAttribute("action", `/portfolio/list`)
+      actionForm.submit()
+
+    }, false)
+
+
+    const {page,size} = [[${pageRequestDTO}]]
+
+    console.log(page,size)
+
+    const total = [[${TodoObj.total}]]
+
+    console.log("total:" + total)
+
+
+    /////////////////////////////////////////////
+    function makePages(page,size,total){
+          console.log(page,size,total)
+
+          const startNum = (Math.ceil(page/10) * 10) - 9
+          console.log("startNum : " , startNum)
+
+          let result = ``
+
+          // 이전.
+          if(startNum !== 1){
+            result +=`<li class="page-item"><a class="page-link" href="${startNum -1}">&laquo;</a></li>`
+          }
+
+          let temp = startNum
+          while(true){
+
+            if(temp * size > total){
+              break;
+            }
+            result += `<li class="page-item"><a class="page-link" href="${temp}">${temp}</a></li>`
+            temp++;
+          }
+
+          //다음
+          if( total % (size * 10 ) === 1){
+            result += `<li class="page-item"><a class="page-link" href="${startNum + 10}">&laquo;</a></li>`
+          }
+
+          console.log("이전 다음 페이징 " , result)
+          return result;
+
+
+      }
+////////////////////////////////////////////////////////////
+
+
+    const pageLIStr = makePages(page,size, total)
+    todoUL.innerHTML = pageLIStr
+
+    const todoTable = document.querySelector(".todoTable")
+
+    todoTable.addEventListener("click", (e) => {
+
+      const target = e.target
+
+      if(!target.getAttribute("data-tno")){
+        return 
+      }
+
+      const tno = target.getAttribute("data-tno")
+
+      console.log("TNO: " + tno)
+
+      actionForm.setAttribute("action", `/portfolio/read/${tno}`)
+
+      actionForm.submit()
+
+
+    },false)
+
+  </script>
+
+</body>
+</html>

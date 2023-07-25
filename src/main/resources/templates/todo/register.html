@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+
+        <h1>글쓰기 페이지</h1>
+
+
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Quick Example</h3>
+            </div>
+
+            <form action="/portfolio/register" method="post" enctype="multipart/form-data">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">제 목</label>
+                  <input name="title" type="text" class="form-control" placeholder="제목을 입력하세요.">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">작성자</label>
+                  <input name="writer" type="text" class="form-control" placeholder="글 작성자">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">내 용</label>
+                  <input name="contents" type="text" class="form-control" placeholder="내용을 입력하세요.">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputFile">이미지 업로드</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input multiple name="files" type="file">
+                    </div>
+                    <div class="input-group-append">
+                      <span class="input-group-text">Upload</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">글쓰기</button>
+                <a href="/portfolio/list" style="float: right;" class="btn btn-primary">목록으로</a>
+              </div>
+            </form>
+              
+          </div>
+        </div>
+
+        <script layout:fragment="script" th:inline="javascript">
+
+
+        </script>
+
+    </div>
+</body>
+</html>
