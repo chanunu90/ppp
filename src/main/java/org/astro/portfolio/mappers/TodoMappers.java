@@ -19,4 +19,9 @@ public interface TodoMappers {
     Long setTodo(TodoDTO todoDTO);
     void setTodoImage(TodoImageDTO imageDTO);
 
+    List<String> getEmail();
+    
+
+    //테스트
+
 }

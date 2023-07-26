@@ -25,6 +25,10 @@
         select * from tbl_todo where tno = #{tno}
     </select>
 
+    <select id="getEmail" resultType="String">
+        select * from tbl_member
+    </select>
+
     <select id="getListCount" resultType="long">
         select count(*) 
         from 

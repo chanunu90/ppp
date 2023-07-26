@@ -44,6 +44,9 @@ dependencies {
 
 	//영상 썸네일 추출용
 	implementation 'org.jcodec:jcodec-javase:0.2.5'
+
+	//자바 부트 메일 API
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 tasks.named('test') {
